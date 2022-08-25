@@ -1,0 +1,6 @@
+"id","firstname","middlename","lastname","email","phone","role","address"
+1,"Nav","Deep","Singh","nav@gmail.com","9876543210",0,"Mohali"
+2,"Dev","Roy","Kapoor","dev@gmail.com","9764523865",1,"Delhi"
+3,"Riya",NULL,"Mathur","riya@gmail.com","9786354567",2,"Mumbai"
+4,"Sam","Well","Tarly","sam@gmail.com
+","7764563178",0,"Florida"
