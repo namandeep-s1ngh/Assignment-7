@@ -54,7 +54,7 @@ class CRUD implements create_table , delete_row_table, edit_row_table {
                         "<td><div contenteditable='false'>" +i.lastname+ "</div></td>" +
                         "<td><div contenteditable='false'>" +i.email+ "</div></td>" +
                         "<td><div contenteditable='false'>" +i.phone+ "</div></td>" + 
-                        "<td><div contenteditable='false'>" +Role[i.role]+ "</div></td>" +                                       
+                        "<td><div contenteditable='false' id='role"+count+"'>" +Role[i.role]+ "</div></td>" +                                       
                         "<td><div contenteditable='false'>" +i.address+ "</div></td>" +                                                 
                         "<td>" + 
                         "<input type='button' id="+"edit_button"+count+" value='Edit' onclick="+"CRUD.prototype.edit_row(this,"+count+")>" + 
@@ -109,6 +109,7 @@ class CRUD implements create_table , delete_row_table, edit_row_table {
         for (let i = 0; i < 7; i++) {
             list[i].childNodes[0].contentEditable = "true";
         }
+        DOM("role"+no).innerHTML = "<form> <select id=role_text"+no+"> <option value=" +0+">" +Role[0]+"</option> <option value=" +1+">" +Role[1]+"</option> <option value=" +2+">" +Role[2]+"</option> </select> </form>";
 
         save.addEventListener('click', async () => {
             await fetch(`http://localhost:3000/details/${id}`, {
@@ -119,7 +120,7 @@ class CRUD implements create_table , delete_row_table, edit_row_table {
                 lastname: list[2].childNodes[0].innerText,
                 email: list[3].childNodes[0].innerText,
                 phone: list[4].childNodes[0].innerText,                
-                //role: list[5].childNodes[0].innerText,
+                role: (DOM("role_text"+no) as HTMLInputElement).value,
                 address: list[6].childNodes[0].innerText
             }), 
             headers: {"Content-type": "application/json; charset=UTF-8"}
@@ -128,18 +129,9 @@ class CRUD implements create_table , delete_row_table, edit_row_table {
                 return(res.json());                                        
             })
                 .then(res => {
-                    // console.log(res));
-                    for (let i of res) {
-                        if (i.id === id) {
-                            list[0].childNodes[0].innerText = i.firstname;
-                            list[1].childNodes[0].innerText = i.middlename;
-                            list[2].childNodes[0].innerText = i.lastname;
-                            list[3].childNodes[0].innerText = i.email;
-                            list[4].childNodes[0].innerText = i.phone;   
-                            list[5].childNodes[0].innerText = Role[i.role]; 
-                            list[6].childNodes[0].innerText = i.address;
-                        }
-                    }                    
+                    //console.log("working");                  
+                    DOM("role"+no).innerHTML = Role[(DOM("role_text"+no) as HTMLInputElement).value];
+
                     ele.style.backgroundColor = "white";
                     show(no);
                     save.style.display = "none";
@@ -169,7 +161,8 @@ class CRUD implements create_table , delete_row_table, edit_row_table {
                         list[2].childNodes[0].innerText = res[0].lastname;
                         list[3].childNodes[0].innerText = res[0].email;
                         list[4].childNodes[0].innerText = res[0].phone;
-                        list[5].childNodes[0].innerText = Role[res[0].role];
+                        //list[5].childNodes[0].innerText = Role[res[0].role];
+                        DOM("role"+no).innerHTML = Role[res[0].role];
                         list[6].childNodes[0].innerText = res[0].address;
                       
                         ele.style.backgroundColor = "white";
