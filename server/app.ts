@@ -82,7 +82,7 @@ app.patch('/details/:id', async function(req, res) {
                                         "',middlename = '" + req.body.middlename + 
                                         "',email = '" + req.body.email + 
                                         "',phone ='" + req.body.phone + 
-                                        //"',role ='" + req.body.role + 
+                                        "',role ='" + Number(req.body.role) + 
                                         "',address ='" + req.body.address + 
                                         "'WHERE id=" + id + ""));
 
